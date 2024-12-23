@@ -12,14 +12,13 @@ namespace Personal_Projects
     {
 
         static void Main(string[] args)
-        {
-            // a @ ＠
-            //     @@
+        {           
             Console.CursorVisible = false;
             ConsoleKeyInfo keynum;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            Player player = new Player(new Vector(50, 50));
+            Player player = new Player(new Vector(20, 20));
+            //player.Playerdesign();
             while (true)
             {
                 if (Console.KeyAvailable)
@@ -38,7 +37,7 @@ namespace Personal_Projects
                         player.MoveRight();
                     }                    
                 }
-                if (stopwatch.ElapsedMilliseconds >= 160)
+                if (stopwatch.ElapsedMilliseconds >= 100)
                 {                    
                     player.Update();
                     stopwatch.Restart();

@@ -11,7 +11,8 @@ namespace Personal_Projects
     {
         Vector _bulletVector;
         bool _isFired = false;
-        public char _playerShot { get; set; } = 'º';
+        public char _playerShot { get; set; } = '¤';
+        public char _mobShot { get; set; } = 'ψ';
         public bool IsFired 
         { get { return _isFired; } set { _isFired = value; }}
         public Vector BullVeactor
@@ -24,10 +25,9 @@ namespace Personal_Projects
         {
             _isFired = true;
         }
-        public void MoveForward()
+        public void PlayerForward()
         {
-            _bulletVector.y--;//위로 쏘는대 콘솔 위에 맞으면 터짐
+            _bulletVector.y--;
         }
-
     }
 }
