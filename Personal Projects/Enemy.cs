@@ -8,6 +8,8 @@ namespace Personal_Projects
 
         Vector enemyVector;//몹 좌표
         Bullet[] enemybullet;//몹 총알 배열
+        bool _solomon = true;
+        public bool Solomon { get { return _solomon; } set { _solomon = value; } }
         public Vector Vector
         { get { return enemyVector; } set { enemyVector = value; } }
         int enemyHP;
@@ -54,7 +56,8 @@ namespace Personal_Projects
                 if (enemybullet[i].IsFired == true)
                 {
                     enemybullet[i].EnemyForward();
-                    if (enemybullet[i].BulletVeactor.y > 28) //적 총알이 29보다 커지면 총알제거
+                    if (enemybullet[i].BulletVeactor.y > 28) //적 총알이 28보다 커지면 총알제거
+                                                             //현재 길이 29인대 출발점 +1해서 28로 맞춰야함
                     {
                         enemybullet[i].IsFired = false;
                     }
@@ -76,42 +79,75 @@ namespace Personal_Projects
         }
         public void MobMove()
         {
-            if (EnemyHP > 0)
-            {
-                LMobMove();
-                RMobMove();
-                EndMobMove();
-            }
+
+
+            LMobMove();
+
+
+            //RMobMove();
+
+
+            EndMobMove();
+
 
         }
         public void LMobMove()
         {
 
-            if (enemyVector.x >= 3)//_mob1 이녀석 날개가 안닿는게 3위치임 3미만은 터진다
-                                   //디자인 바꾸던가 해야함 생각해라 현민아
+
+            if (_solomon == true)//_mob1 이녀석 날개가 안닿는게 3위치임 3미만은 터진다
+                                 //디자인 바꾸던가 해야함 생각해라 현민아
+            {
+                if (enemyVector.x >= 3)
+                {
+                    Mobdesign();
+                    enemyVector.x -= 3;
+                    enemyVector.y++;
+                    if (enemyVector.x <= 2) //근사치 테스트 <= 로 대강 때려보자
+                    { _solomon = false; }
+                }
+            }
+            else
+            {
+                Mobdesign();
+                enemyVector.x += 3;
+                enemyVector.y++;
+
+                if (enemyVector.x == 17)//맵좌표를 넣어줘야함 맵만들면
+                { _solomon = true; }
+            }
+
+        }
+        public void RMobMove()
+        {
+            if (_solomon == true)//_mob1 이녀석 날개가 안닿는게 3위치임 3미만은 터진다
+                                 //디자인 바꾸던가 해야함 생각해라 현민아
+            {
+                if (enemyVector.x <= 30)
+                {
+                    Mobdesign();
+                    enemyVector.x += 3;
+                    enemyVector.y++;
+                    if (enemyVector.x >= 30) //근사치 테스트 <= 로 대강 때려보자
+                    { _solomon = false; }
+                }
+            }
+            else
             {
                 Mobdesign();
                 enemyVector.x -= 3;
                 enemyVector.y++;
-                
-                
-            }
-        }
-        public void RMobMove()
-        {
-            if (enemyVector.x <= 3)//여기서 +3이되서 메인에 반복문땜에 다시 위로가서 -2 되서 개빡침
-            {
-                Mobdesign();                
-                enemyVector.x += 3;
-                enemyVector.y++;
+
+                if (enemyVector.x <= 3)//맵좌표를 넣어줘야함 맵만들면
+                { _solomon = true; }
             }
         }
         public void EndMobMove()
         {
             if (enemyVector.y == 29)
             {
-                Mobdesign();
-                enemyVector.y = 0;
+                Console.WriteLine(_mob);
+                
             }
         }
         public void EnemyRenser()//몹 위치하는 곳 출력
@@ -121,7 +157,7 @@ namespace Personal_Projects
             {
                 if (shot.IsFired == true)
                 {
-                    Console.SetCursorPosition(shot.BulletVeactor.x, shot.BulletVeactor.y+1);//몹로부터 총알발사
+                    Console.SetCursorPosition(shot.BulletVeactor.x, shot.BulletVeactor.y + 1);//몹로부터 총알발사
                     Console.Write(shot._mobShot);
                 }
             }
