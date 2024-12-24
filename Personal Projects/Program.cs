@@ -17,16 +17,24 @@ namespace Personal_Projects
             ConsoleKeyInfo keynum;
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
-            Player player = new Player(new Vector(20, 20));
-            //player.Playerdesign();
+            Player player = new Player(new Vector(20, 29));
+            Enemy enemy = new Enemy(new Vector(20, 0),100);//일단 피 100,bullet에 데미지 구현해야함
+                                                           //player.Playerdesign();
+            Stopwatch Timer = new Stopwatch();
+            Timer.Start();
+            
             while (true)
             {
+              //Console.WriteLine($"\t\t\t{Timer.Elapsed}");
                 if (Console.KeyAvailable)
                 {
                     keynum = Console.ReadKey(true);
                     if (keynum.Key == ConsoleKey.Spacebar)
                     {
-                        player.Instantiate();
+                        player.PlayerBulletShot();                        
+                        enemy.EnemyBulletShot();
+                        enemy.MobMove();
+
                     }
                     else if (keynum.Key == ConsoleKey.A)
                     {
@@ -37,12 +45,20 @@ namespace Personal_Projects
                         player.MoveRight();
                     }                    
                 }
-                if (stopwatch.ElapsedMilliseconds >= 100)
+                
+                if (stopwatch.ElapsedMilliseconds > 100)
                 {                    
                     player.Update();
+                    enemy.EnemyUpdate();
                     stopwatch.Restart();
                 }
-                player.Rnder();
+                
+                
+                player.Render();
+                enemy.EnemyRenser();
+                
+
+
             }
         }
     }
